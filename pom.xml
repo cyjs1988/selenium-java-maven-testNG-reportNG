@@ -140,6 +140,7 @@ testNG中有这样一个类：Reporter，就是专门做这个工作的。
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
+					<encoding>UTF-8</encoding>
 					<verbose>true</verbose>
 					<fork>true</fork>
 					<executable>C:\Program Files\Java\jdk1.8.0_131\bin\javac</executable>
