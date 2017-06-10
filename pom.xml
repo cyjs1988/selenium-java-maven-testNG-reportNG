@@ -90,7 +90,7 @@
 	 <build>
         <plugins>
            
-       	   <!-- 添加插件 关联testNg.xml -->
+       	   <!-- 添加插件 关联testNg.xml  ，surefire插件其实就是一个容器-->
            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -98,7 +98,7 @@
                 <configuration>
                 
                 <!-- 有疑问 ，加上这段代码就没有多余的report文件了-->
-                <!-- 添加插件,添加ReportNg的监听器，修改最后的TestNg的报告 -->
+                <!-- 添加插件,添加ReportNg的监听器，生成TestNg的报告 -->
                 	 <properties>
                         <property>
                             <name>usedefaultlisteners</name>
