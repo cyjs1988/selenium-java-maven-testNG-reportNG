@@ -1,0 +1,159 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>TestNG</groupId>
+	<artifactId>TestNG</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>TestNG</name>
+	<url>http://maven.apache.org</url>
+
+    <!-- maven 参数配置，这里引用不同的testng.xml -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <xmlFileName>testNG.xml</xmlFileName>
+    </properties>
+    
+    
+    
+	<dependencies>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>2.53.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>2.53.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+
+		<!-- 依赖testNg -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.9.9</version>
+		</dependency>
+
+		<!-- 依赖reportNg 关联testNg -->
+		<dependency>
+			<groupId>org.uncommons</groupId>
+			<artifactId>reportng</artifactId>
+			<version>1.1.4</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.testng</groupId>
+					<artifactId>testng</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+ 		<dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.0-beta5</version>
+        </dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-firefox-driver</artifactId>
+			<version>2.46.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chrome-driver</artifactId>
+			<version>2.46.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-ie-driver</artifactId>
+			<version>2.47.0</version>
+		</dependency>
+
+
+
+	</dependencies>
+	
+	
+	
+	 <build>
+        <plugins>
+           
+       	   <!-- 添加插件 关联testNg.xml -->
+           <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                
+                <!-- 有疑问 ，加上这段代码就没有多余的report文件了-->
+                <!-- 添加插件,添加ReportNg的监听器，修改最后的TestNg的报告 -->
+                	 <properties>
+                        <property>
+                            <name>usedefaultlisteners</name>
+                            <value>false</value>
+                        </property>                        
+                        <property>
+                            <name>listener</name>
+                            <value>org.uncommons.reportng.HTMLReporter</value>
+                        </property>
+                    </properties>
+                
+                    <suiteXmlFiles>
+                        <suiteXmlFile>res/testNG.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    
+                    <workingDirectory>target/</workingDirectory>
+                </configuration>
+            </plugin>  
+ 
+ <!--
+ 
+  这里要将defaultListener设置为false，下面配置了两个listener，一个是HTMLReport，用来生成HTML格式的Report，
+ 另一个是JUnitXMLReporter，这个是用来生成xml格式的report，用于jekins服务器;practice11.xml即为即将运行的TestNG xml。
+然后运行maven test，生成的报告会在target/目录下。
+有了报告以后，我们会想，能不能在case执行的过程中将一些重要的log信息也输出到report中呢?
+testNG中有这样一个类：Reporter，就是专门做这个工作的。
+@Test
+    public void test1(){
+        Reporter.log("This is test1");
+    }
+这样生成的报告就既美观又实用了。
+除了ReportNG外，我们还可以使用testNG-xslt
+
+ -->
+          
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<verbose>true</verbose>
+					<fork>true</fork>
+					<executable>C:\Program Files\Java\jdk1.8.0_131\bin\javac</executable>
+				</configuration>
+			</plugin>  
+            
+        </plugins>
+    </build>
+
+
+
+
+
+	
+    
+    
+</project>
